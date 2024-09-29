@@ -128,6 +128,7 @@ def prepare(args):
         train_loss = 0
         correct = 0
         total = 0
+        ckpt_cnt = 0
 
         for batch_idx, (inputs, targets) in enumerate(tqdm(trainloader)):
             inputs, targets = inputs.to(device), targets.to(device)
@@ -143,6 +144,15 @@ def prepare(args):
                 if ((batch_idx + 1) % n_acc_steps == 0) or ((batch_idx + 1) == len(trainloader)):
                     optimizer.step(loss=loss)
                     optimizer.zero_grad()
+                    ckpt_cnt += 1
+                    if ckpt_cnt % 10 == 0:
+                        torch.save(
+                            {
+                                "epoch": epoch,
+                                "state_dict": net.state_dict(),
+                                "test accuracy": 100.*correct/total,
+                            }, f"./checkpoints/{args.model}_epoch={epoch}_cnt={ckpt_cnt//10}.ckpt"
+                        )
                 else:
                     optimizer.virtual_step(loss=loss)
             train_loss += loss.mean().item()
@@ -172,14 +182,6 @@ def prepare(args):
 
             print(epoch, len(testloader), 'Loss: %.3f | Acc: %.3f%% (%d/%d)'
                                 % (test_loss/(batch_idx+1), 100.*correct/total, correct, total))
-        
-        torch.save(
-            {
-                "epoch": epoch,
-                "state_dict": net.state_dict(),
-                "test accuracy": 100.*correct/total,
-            }, f"./checkpoints/{args.model}_epoch={epoch}.ckpt"
-        )
 
     return args.epochs, train, test
     
@@ -202,7 +204,7 @@ if __name__ == '__main__':
                         type=float, help='max grad norm')
     parser.add_argument('--mode', default='ghost_mixed')
     parser.add_argument('--model', default='resnet18', type=str)
-    parser.add_argument('--mini_bs', type=int, default=50)
+    parser.add_argument('--mini_bs', type=int, default=5)
     parser.add_argument('--pretrained', type=int, default=1)
     parser.add_argument('--cifar_data', type=str, default='CIFAR10')
 
