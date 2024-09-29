@@ -37,14 +37,14 @@ def prepare(args):
 
     if args.cifar_data=='CIFAR10':
       trainset = torchvision.datasets.CIFAR10(
-        root='/data', train=True, download=True, transform=transform_train)
+        root='C:/Science/datasets/cifar10', train=True, download=False, transform=transform_train)
       testset = torchvision.datasets.CIFAR10(
-        root='/data', train=False, download=True, transform=transform_test)
+        root='C:/Science/datasets/cifar10', train=False, download=False, transform=transform_test)
     elif args.cifar_data=='CIFAR100':
       trainset = torchvision.datasets.CIFAR100(
-        root='/data', train=True, download=True, transform=transform_train)
+        root='C:/Science/datasets/cifar100', train=True, download=False, transform=transform_train)
       testset = torchvision.datasets.CIFAR100(
-        root='/data', train=False, download=True, transform=transform_test)
+        root='C:/Science/datasets/cifar100', train=False, download=False, transform=transform_test)
  
     trainloader = torch.utils.data.DataLoader(
         trainset, batch_size=args.mini_bs, shuffle=True, num_workers=2)
