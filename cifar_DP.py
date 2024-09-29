@@ -172,6 +172,14 @@ def prepare(args):
 
             print(epoch, len(testloader), 'Loss: %.3f | Acc: %.3f%% (%d/%d)'
                                 % (test_loss/(batch_idx+1), 100.*correct/total, correct, total))
+        
+        torch.save(
+            {
+                "epoch": epoch,
+                "state_dict": net.state_dict(),
+                "test accuracy": 100.*correct/total,
+            }, f"./checkpoints/{args.model}_epoch={epoch}.ckpt"
+        )
 
     return args.epochs, train, test
     
