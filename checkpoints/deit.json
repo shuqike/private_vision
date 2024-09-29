@@ -1,0 +1,15 @@
+[
+    {
+        "epoch": -1,
+        "model": "vit_base_patch16_224",
+        "epsilon": 2,
+        "cifar knn val_top1": 0.9136999845504761
+    },
+    {
+        "epoch": 0,
+        "model": "vit_base_patch16_224",
+        "epsilon": 2,
+        "cifar knn val_top1": 0.9072999954223633,
+        "cifar knn val_top5": 0.9973999857902527
+    }
+]

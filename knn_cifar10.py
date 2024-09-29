@@ -105,9 +105,9 @@ if __name__ == "__main__":
     parser.add_argument("--epoch", type=int, default=0)
     args = parser.parse_args()
     seed = 9
-    model = timm.create_model("beit_large_patch16_224", pretrained=True, num_classes=10)
+    model = timm.create_model("vit_base_patch16_224", pretrained=True, num_classes=10)
     model.head = Identity()
-    checkpoint = torch.load("C:/Science/private_vision/checkpoints/beit_large_patch16_224_epoch=0_cnt=1.ckpt")
+    checkpoint = torch.load("C:/Science/private_vision/checkpoints/vit_base_patch16_224_epoch=0_cnt=1.ckpt")
     msg = model.load_state_dict(checkpoint["state_dict"], strict=False)
     print_rank_zero("Backbone missing keys", msg.missing_keys)
     pl.seed_everything(seed)
@@ -115,7 +115,7 @@ if __name__ == "__main__":
         model=model,
         data_dir=Path("C:/Science/datasets/cifar10"),
         log_dir=Path("C:/Science/iclr2024_distort/logs"),
-        batch_size_per_device=500,
+        batch_size_per_device=100,
         num_workers=2,
         accelerator="gpu",
         devices=[1],

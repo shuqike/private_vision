@@ -56,6 +56,7 @@ def prepare(args):
     NUM_CLASSES=10 if args.cifar_data=='CIFAR10' else 100
 
     net = timm.create_model(args.model,pretrained=args.pretrained,num_classes=NUM_CLASSES)
+    print('Valid model:', ModuleValidator.is_valid(net))
     net = ModuleValidator.fix(net)
     net = net.to(device)
     
