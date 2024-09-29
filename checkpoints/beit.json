@@ -1,0 +1,12 @@
+[
+    {
+        "epoch": -1,
+        "cifar knn val_top1": 0.5889999866485596,
+        "cifar knn val_top5": 0.948199987411499
+    },
+    {
+        "epoch": 0,
+        "cifar knn val_top1": 0.8960999846458435,
+        "cifar knn val_top5": 0.9945999979972839
+    }
+]
